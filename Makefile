@@ -1,14 +1,15 @@
 CC	= cc
 
-CFLAGS	= -Wall -Wextra -Werror
+CFLAGS	= -Wall -Wextra -Werror -I.
 
-SRC =	philosophers.c \
-		ft_check_int.c
+SRC_DIR = srcs
+OBJ_DIR = objs
 
-OBJ = ${SRC:.c=.o}
+SRC =	$(SRC_DIR)/philosophers.c \
+		$(SRC_DIR)/ft_check_int.c \
+		$(SRC_DIR)/ft_init.c
 
-%.o:%.c
-	${CC} ${CFLAGS} -c $< -o $@
+OBJ = ${SRC:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o}
 
 NAME	= philo
 
@@ -16,15 +17,17 @@ all	: ${NAME}
 
 ${NAME}	: ${OBJ}
 	${CC} ${CFLAGS} ${OBJ} -o ${NAME}
-	# ar -rcs $@ $^
+
+$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
+	@mkdir -p $(dir $@)
+	$(CC) $(CFLAGS) -c $< -o $@
 
 clean	:
-	rm -f	${OBJ}
+	rm -rf	$(OBJ_DIR)
 
-fclean	:
-	rm	-f	${NAME}
+fclean	:	clean
+	rm	-f	$(NAME)
 
-re	:	fclean
-	make
+re	:	fclean all
 
 .PHONY: all clean fclean re
