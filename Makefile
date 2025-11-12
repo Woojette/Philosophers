@@ -7,7 +7,8 @@ OBJ_DIR = objs
 
 SRC =	$(SRC_DIR)/philosophers.c \
 		$(SRC_DIR)/ft_check_int.c \
-		$(SRC_DIR)/ft_init.c
+		$(SRC_DIR)/ft_init.c \
+		$(SRC_DIR)/ft_thread.c
 
 OBJ = ${SRC:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o}
 

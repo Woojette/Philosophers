@@ -23,8 +23,6 @@ int ft_init_av(int ac, char **av, t_table *table)
 		return (free(table->philo), -1);
 	ft_init_philo(table);
 	return (0);
-	// table->philo[1].pos = x;
-	//char* str = malloc(char) * 10; //str[0 1 2 3]
 }
 
 int	ft_init_philo(t_table *table)
@@ -34,30 +32,20 @@ int	ft_init_philo(t_table *table)
 
 	i = 0;
 	j = 1;
-	int x = 0;
-	while (x < table->nbr_philo)
-	{
-		table->fork[x].id = x;
-		x++;
-	}
-
 	while (i < table->nbr_philo)
 	{
 		table->philo[i].pos = j; //philo[0]
-		printf("pos:%d", table->philo[i].pos);
 		table->philo[i].philo_mange = 0;
 		table->philo[i].p_table = table;
 		if (i % 2 == 0)
 		{
 			table->philo[i].first_fork = &table->fork[i];
 			table->philo[i].seconde_fork = &table->fork[(i+1) % table->nbr_philo];
-			printf("id %d %d \n", table->philo[i].first_fork->id, table->philo[i].seconde_fork->id);
 		}
 		else if (i % 2 == 1)
 		{
 			table->philo[i].first_fork = &table->fork[(i+1) % table->nbr_philo];
 			table->philo[i].seconde_fork = &table->fork[i];
-			printf("id %d %d \n", table->philo[i].first_fork->id, table->philo[i].seconde_fork->id);
 		}
 		i++;
 		j++;
@@ -65,5 +53,15 @@ int	ft_init_philo(t_table *table)
 	return (0);
 }
 
+int	ft_init_mutex(t_table *table)
+{
+	int	i;
 
-//philo.p_table.end = 1;
+	i = 0;
+	while (i < table->nbr_philo)
+	{
+		pthread_mutex_init(&table->fork[i].fork, NULL);
+		i++;
+	}
+	return (0);
+}

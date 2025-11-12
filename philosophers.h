@@ -18,10 +18,11 @@ typedef struct s_fork
 
 typedef struct s_philo
 {
-	int 	pos;
-	int		philo_mange;
-	t_fork 	*first_fork;
-	t_fork	*seconde_fork;
+	int	 		pos;
+	int			philo_mange;
+	t_fork	 	*first_fork;
+	t_fork		*seconde_fork;
+	pthread_t	philo_id;
 	struct s_table	*p_table;
 }	t_philo;
 
@@ -49,5 +50,10 @@ int		ft_check_int_av(int ac, char **av);
 // ft_init
 int 	ft_init_av(int ac, char **av, t_table *table);
 int		ft_init_philo(t_table *table);
+int		ft_init_mutex(t_table *table);
+void	*routine(void *arg);
+int		ft_create_thread(t_table *table);
+int		ft_join_thread(t_table *table);
+int		ft_destroy_mutex(t_table *table);
 
 #endif

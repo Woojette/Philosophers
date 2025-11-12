@@ -12,7 +12,10 @@ int	main(int ac, char **av)
 		return (write(2, "Error\n", 6), 1);
 	if (ft_init_av(ac, av, &table) == -1)
 		return (write(2, "Error\n", 6), 1);
-		// ft_print(&table);
+	ft_init_mutex(&table);
+	ft_create_thread(&table);
+	ft_join_thread(&table);
+	ft_destroy_mutex(&table);
 	return (0);
 }
 //av[1][1]
