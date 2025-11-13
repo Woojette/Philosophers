@@ -18,4 +18,4 @@ int	main(int ac, char **av)
 	ft_destroy_mutex(&table);
 	return (0);
 }
-//av[1][1]
+//av[1][1]0
