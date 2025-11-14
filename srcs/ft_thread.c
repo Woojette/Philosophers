@@ -1,25 +1,42 @@
 #include "philosophers.h"
 
-long	ft_get_time_ms(t_table *table)
-{
-	struct timeval	start, end;
-	long	seconds;
-	long	microseconds;
-	double	elapse_milliseconds;
-
-	gettimeofday(&start, NULL);
-	usleep(1000000); /////
-	gettimeofday(&end, NULL);
-	seconds = end.tv_sec - start.tv_sec;
-	microseconds = end.tv_usec - start.tv_usec;
-	elapse_milliseconds = (seconds * 1000.0) + (microseconds / 1000.0);
-}
-
 void	*routine(void *arg)
 {
 	t_philo	*philo = (t_philo *)arg;
 	(void)philo;
-	printf("%d %d has taken a fork\n", philo->philo_id);
+	while (philo->p_table->end != 1)
+	{
+		ft_eat(philo);
+		ft_sleep(philo);
+		ft_think(philo);
+	}
+	return (NULL);
+}
+
+void	*routine_manager(void *arg)
+{
+	int		i;
+	long	now;
+
+	t_table *table = (t_table *)arg;
+	i = 0;
+	now = ft_get_time_ms(table);
+	// printf("now:%ld | ", now);
+	// printf("nbp : %d | ", table->nbr_philo);
+	// printf("now:%ld | lastmeal:%ld", now, table->philo[i].last_meal);
+	while (i < table->nbr_philo)
+	{
+		now = ft_get_time_ms(table);
+		// printf("now 2 :%ld \n", now);
+		if (table->time_die < (now - (table->philo[i].last_meal)))
+		{
+			ft_write(table->philo, DEAD);
+			break ;
+		}
+		i++;
+		if (i == table->nbr_philo)
+			i = 0;
+	}
 	return (NULL);
 }
 
@@ -33,6 +50,7 @@ int	ft_create_thread(t_table *table)
 		pthread_create(&table->philo[i].philo_id, NULL, routine, &table->philo[i]);
 		i++;
 	}
+	pthread_create(&table->manager, NULL, routine_manager, table);
 	return (0);
 }
 
@@ -48,6 +66,7 @@ int	ft_join_thread(t_table *table)
 		pthread_join(table->philo[i].philo_id, NULL);
 		i++;
 	}
+	pthread_join(table->manager, NULL);
 	return (0);
 }
 

@@ -19,7 +19,7 @@ typedef struct s_data
 //Le mutex permet l'execution d'un block de code sans interference par d'autre thread
 void *routine1(void *arg)
 {
-	t_data *data = (t_data *)arg;
+	t_data data = (t_data *)arg;
 
 
 	pthread_mutex_lock(&data->mutex1);

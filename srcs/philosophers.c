@@ -12,9 +12,12 @@ int	main(int ac, char **av)
 		return (write(2, "Error\n", 6), 1);
 	if (ft_init_av(ac, av, &table) == -1)
 		return (write(2, "Error\n", 6), 1);
+	table.time_debut = ft_init_time(&table);
 	ft_init_mutex(&table);
+
 	ft_create_thread(&table);
 	ft_join_thread(&table);
+
 	ft_destroy_mutex(&table);
 	return (0);
 }
