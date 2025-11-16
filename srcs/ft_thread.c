@@ -9,6 +9,11 @@ void	*routine(void *arg)
 		ft_eat(philo);
 		ft_sleep(philo);
 		ft_think(philo);
+		if (ft_get_int(&philo->p_mange, &philo->philo_mange) == philo->p_table->nbr_time_eat)
+		{
+			ft_incrementer_int(&philo->p_table->m_end, &philo->p_table->all_full);
+			return (NULL);
+		}
 	}
 	return (NULL);
 }
@@ -29,6 +34,8 @@ void	*routine_manager(void *arg)
 		now = ft_get_time_ms(table);
 		// printf("now 2 :%ld \n", now);
 		// if (table->time_die < (now - (table->philo[i].last_meal)))
+		if (ft_get_int(&table->m_end, &table->all_full) == table->nbr_philo)
+			return (NULL);
 		if (table->time_die < (now - (ft_get_long(&table->philo[i].p_mange, &table->philo[i].last_meal))))
 		{
 			ft_write(table->philo, DEAD);

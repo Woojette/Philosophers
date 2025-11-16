@@ -36,8 +36,8 @@ void	ft_eat(t_philo *philo)
 	ft_write(philo, FORK2);
 	ft_write(philo, EAT);
 	ft_incrementer_int(&philo->p_mange, &philo->philo_mange);
-	if (ft_get_int(&philo->p_mange, &philo->philo_mange) == philo->p_table->nbr_time_eat)
-		return ;
+	// if (ft_get_int(&philo->p_mange, &philo->philo_mange) == philo->p_table->nbr_time_eat)
+	// 	return ;
 	ft_set_long(&philo->p_mange, &philo->last_meal, ft_get_time_ms(philo->p_table));
 	ft_usleep((philo->p_table->time_to_eat * 1000), philo->p_table);
 	pthread_mutex_unlock(&philo->first_fork->fork);
