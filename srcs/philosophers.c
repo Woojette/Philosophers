@@ -13,12 +13,16 @@ int	main(int ac, char **av)
 	if (ft_init_av(ac, av, &table) == -1)
 		return (write(2, "Error\n", 6), 1);
 	table.time_debut = ft_init_time(&table);
+	if (table.nbr_philo == 1)
+	{
+		printf("%lu %d has taken a fork\n", ft_get_time_ms(&table), table.philo->pos);
+		usleep(table.time_die * 1000);
+		printf("%lu %d died\n", ft_get_time_ms(&table), table.philo->pos);
+		return (free(table.philo), free(table.fork), 0);
+	}
 	ft_init_mutex(&table);
-
 	ft_create_thread(&table);
 	ft_join_thread(&table);
-
 	ft_destroy_mutex(&table);
-	return (0);
+	return (free(table.philo), free(table.fork), 0);
 }
-//av[1][1]0

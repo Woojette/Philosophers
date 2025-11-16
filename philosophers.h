@@ -30,6 +30,7 @@ typedef struct s_philo
 	t_fork	 	*first_fork;
 	t_fork		*seconde_fork;
 	pthread_t	philo_id;
+	pthread_mutex_t	p_mange;
 	struct s_table	*p_table;
 }	t_philo;
 
@@ -46,6 +47,7 @@ typedef struct s_table
 	long	time_to_sleep;
 	long	nbr_time_eat;
 	pthread_t	manager;
+	pthread_mutex_t m_end;
 	t_philo	*philo;  // philo = malloc(sizeof(t_philo) * nbr_philo); philo[0]->pos != philo[1]->pos
 	t_fork	*fork;//fork[0 1 2 3 4];
 }	t_table;
@@ -80,5 +82,13 @@ void	ft_write(t_philo *philo, int status);
 void	ft_eat(t_philo *philo);
 void	ft_sleep(t_philo *philo);
 void	ft_think(t_philo *philo);
+
+// ft_get.c
+void	ft_incrementer_int(pthread_mutex_t *mutex, int *val);
+void	ft_incrementer_long(pthread_mutex_t *mutex, long *val);
+void	ft_set_int(pthread_mutex_t *mutex, int *val, int new);
+void	ft_set_long(pthread_mutex_t *mutex, long *val, long new);
+int		ft_get_int(pthread_mutex_t *mutex, int *val);
+long	ft_get_long(pthread_mutex_t *mutex, long *val);
 
 #endif

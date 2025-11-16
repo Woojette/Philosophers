@@ -10,7 +10,8 @@ SRC =	$(SRC_DIR)/philosophers.c \
 		$(SRC_DIR)/ft_init.c \
 		$(SRC_DIR)/ft_thread.c \
 		$(SRC_DIR)/ft_time.c \
-		$(SRC_DIR)/ft_etat.c
+		$(SRC_DIR)/ft_etat.c \
+		$(SRC_DIR)/ft_get.c
 
 OBJ = ${SRC:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o}
 

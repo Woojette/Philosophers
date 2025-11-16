@@ -4,7 +4,7 @@ void	*routine(void *arg)
 {
 	t_philo	*philo = (t_philo *)arg;
 	(void)philo;
-	while (philo->p_table->end != 1)
+	while (ft_get_int(&philo->p_table->m_end, &philo->p_table->end) != 1)
 	{
 		ft_eat(philo);
 		ft_sleep(philo);
@@ -28,7 +28,8 @@ void	*routine_manager(void *arg)
 	{
 		now = ft_get_time_ms(table);
 		// printf("now 2 :%ld \n", now);
-		if (table->time_die < (now - (table->philo[i].last_meal)))
+		// if (table->time_die < (now - (table->philo[i].last_meal)))
+		if (table->time_die < (now - (ft_get_long(&table->philo[i].p_mange, &table->philo[i].last_meal))))
 		{
 			ft_write(table->philo, DEAD);
 			break ;
@@ -75,8 +76,11 @@ int	ft_destroy_mutex(t_table *table)
 	int	i;
 
 	i = 0;
+	pthread_mutex_destroy(&table->m_end);
+	pthread_mutex_destroy(&table->write);
 	while (i < table->nbr_philo)
 	{
+		pthread_mutex_destroy(&table->philo[i].p_mange);
 		pthread_mutex_destroy(&table->fork[i].fork);
 		i++;
 	}

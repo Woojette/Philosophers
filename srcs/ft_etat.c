@@ -6,7 +6,8 @@ void	ft_write(t_philo *philo, int status)
 
 	temps = ft_get_time_ms(philo->p_table);
 	pthread_mutex_lock(&philo->p_table->write);
-	if (philo->p_table->end == 1)
+	// if (philo->p_table->end == 1)
+	if (ft_get_int(&philo->p_table->m_end, &philo->p_table->end) == 1)
 	{
 		pthread_mutex_unlock(&philo->p_table->write);
 		return ;
@@ -22,12 +23,11 @@ void	ft_write(t_philo *philo, int status)
 	else if (status == DEAD)
 	{
 		printf("%lu %d died\n", temps, philo->pos);
-		philo->p_table->end = 1;
+		ft_set_int(&philo->p_table->m_end, &philo->p_table->end, 1);
 	}
 	pthread_mutex_unlock(&philo->p_table->write);
 }
 
-// 5 6 2 1 3
 void	ft_eat(t_philo *philo)
 {
 	pthread_mutex_lock(&philo->first_fork->fork);
@@ -35,8 +35,10 @@ void	ft_eat(t_philo *philo)
 	pthread_mutex_lock(&philo->seconde_fork->fork);
 	ft_write(philo, FORK2);
 	ft_write(philo, EAT);
-	philo->philo_mange++;
-	philo->last_meal = ft_get_time_ms(philo->p_table);
+	ft_incrementer_int(&philo->p_mange, &philo->philo_mange);
+	if (ft_get_int(&philo->p_mange, &philo->philo_mange) == philo->p_table->nbr_time_eat)
+		return ;
+	ft_set_long(&philo->p_mange, &philo->last_meal, ft_get_time_ms(philo->p_table));
 	ft_usleep((philo->p_table->time_to_eat * 1000), philo->p_table);
 	pthread_mutex_unlock(&philo->first_fork->fork);
 	pthread_mutex_unlock(&philo->seconde_fork->fork);

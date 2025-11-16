@@ -59,8 +59,10 @@ int	ft_init_mutex(t_table *table)
 
 	i = 0;
 	pthread_mutex_init(&table->write, NULL);
+	pthread_mutex_init(&table->m_end, NULL);
 	while (i < table->nbr_philo)
 	{
+		pthread_mutex_init(&table->philo[i].p_mange, NULL);
 		pthread_mutex_init(&table->fork[i].fork, NULL);
 		i++;
 	}

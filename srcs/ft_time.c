@@ -48,5 +48,7 @@ void	ft_usleep(long msec, t_table *table)
 	{
 		usleep(msec / 1000);
 		temps_ecoule = ft_get_time_micro(table);
+		if (ft_get_int(&table->m_end, &table->end) == 1)
+			return ;
 	}
 }
