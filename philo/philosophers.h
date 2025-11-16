@@ -39,7 +39,7 @@ typedef struct s_philo
 	int				pos;
 	int				philo_mange;
 	long			last_meal;
-	t_fork	 		*fork_le;
+	t_fork			*fork_le;
 	t_fork			*fork_2e;
 	pthread_t		philo_id;
 	pthread_mutex_t	p_mange;
@@ -60,8 +60,8 @@ typedef struct s_table
 	long			nbr_time_eat;
 	pthread_t		manager;
 	pthread_mutex_t	m_end;
-	t_philo			*philo;  // philo = malloc(sizeof(t_philo) * nbr_philo); philo[0]->pos != philo[1]->pos
-	t_fork			*fork;//fork[0 1 2 3 4];
+	t_philo			*philo;
+	t_fork			*fork;
 }	t_table;
 
 //ft_check_int.c
@@ -72,7 +72,7 @@ int		ft_check_limit(int ac, char **av);
 int		ft_check_int_av(int ac, char **av);
 
 // ft_init
-int 	ft_init_av(int ac, char **av, t_table *table);
+int		ft_init_av(int ac, char **av, t_table *table);
 int		ft_init_philo(t_table *table);
 int		ft_init_mutex(t_table *table);
 
