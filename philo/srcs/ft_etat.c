@@ -52,6 +52,12 @@ void	ft_eat(t_philo *philo)
 	ft_usleep((philo->p_table->time_to_eat * 1000), philo->p_table);
 	pthread_mutex_unlock(&philo->fork_le->fork);
 	pthread_mutex_unlock(&philo->fork_2e->fork);
+	if (ft_get_int(&philo->p_mange, &philo->philo_mange)
+		== philo->p_table->nbr_time_eat)
+	{
+		ft_incrementer_int(&philo->p_table->m_end,
+			&philo->p_table->all_full);
+	}
 }
 
 void	ft_sleep(t_philo *philo)
@@ -62,5 +68,14 @@ void	ft_sleep(t_philo *philo)
 
 void	ft_think(t_philo *philo)
 {
+	long	attente;
+
+	attente = (philo->p_table->time_to_eat * 2) - (philo->p_table->time_to_sleep);
 	ft_write(philo, THINK);
+	// ft_usleep(((philo->p_table->time_to_eat * 2) - (philo->p_table->time_to_sleep)), philo->p_table);
+	if (philo->p_table->nbr_philo % 2 == 0 && philo->pos % 2 == 0)
+		// ft_usleep(((philo->p_table->time_to_eat * 2) - (philo->p_table->time_to_sleep)), philo->p_table);
+		ft_usleep(1000, philo->p_table);
+	else if (philo->p_table->nbr_philo % 2 == 1 && philo->pos % 2 == 0)
+		ft_usleep(attente * 1000, philo->p_table);
 }

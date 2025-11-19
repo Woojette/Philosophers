@@ -21,15 +21,9 @@ void	*routine(void *arg)
 	while (ft_get_int(&philo->p_table->m_end, &philo->p_table->end) != 1)
 	{
 		ft_eat(philo);
+
 		ft_sleep(philo);
 		ft_think(philo);
-		if (ft_get_int(&philo->p_mange, &philo->philo_mange)
-			== philo->p_table->nbr_time_eat)
-		{
-			ft_incrementer_int(&philo->p_table->m_end,
-				&philo->p_table->all_full);
-			return (NULL);
-		}
 	}
 	return (NULL);
 }
@@ -47,11 +41,11 @@ void	*routine_manager(void *arg)
 	{
 		now = ft_get_time_ms(table);
 		if (ft_get_int(&table->m_end, &table->all_full) == table->nbr_philo)
-			return (NULL);
+			return (ft_set_int(&table->m_end, &table->end, 1), NULL);
 		if (table->time_die < (now - (ft_get_long(&table->philo[i].p_mange,
 						&table->philo[i].last_meal))))
 		{
-			ft_write(table->philo, DEAD);
+			ft_write(&table->philo[i], DEAD);
 			break ;
 		}
 		i++;
@@ -68,8 +62,21 @@ int	ft_create_thread(t_table *table)
 	i = 0;
 	while (i < table->nbr_philo)
 	{
-		pthread_create(&table->philo[i].philo_id, NULL,
-			routine, &table->philo[i]);
+		if (i % 2 == 0)
+		{
+			pthread_create(&table->philo[i].philo_id, NULL,
+				routine, &table->philo[i]);
+		}
+		i++;
+	}
+	i = 0;
+	while (i < table->nbr_philo)
+	{
+		if (i % 2 == 1)
+		{
+			pthread_create(&table->philo[i].philo_id, NULL,
+				routine, &table->philo[i]);
+		}
 		i++;
 	}
 	pthread_create(&table->manager, NULL, routine_manager, table);
