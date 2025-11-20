@@ -30,7 +30,7 @@ int	ft_init_av(int ac, char **av, t_table *table)
 	table->philo = malloc(sizeof(t_philo) * table->nbr_philo);
 	if (!table->philo)
 		return (-1);
-	table->fork = malloc(sizeof(t_fork) * table->nbr_philo);
+	table->fork = malloc((sizeof(t_fork)) * table->nbr_philo);
 	if (!table->fork)
 		return (free(table->philo), -1);
 	ft_init_philo(table);
@@ -48,6 +48,7 @@ int	ft_init_philo(t_table *table)
 	{
 		table->philo[i].pos = j;
 		table->philo[i].philo_mange = 0;
+		table->philo[i].last_meal = 0;
 		table->philo[i].p_table = table;
 		if (i % 2 == 0)
 		{
