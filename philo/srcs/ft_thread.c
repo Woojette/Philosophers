@@ -21,7 +21,6 @@ void	*routine(void *arg)
 	while (ft_get_int(&philo->p_table->m_end, &philo->p_table->end) != 1)
 	{
 		ft_eat(philo);
-
 		ft_sleep(philo);
 		ft_think(philo);
 	}

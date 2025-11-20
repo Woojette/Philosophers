@@ -70,12 +70,11 @@ void	ft_think(t_philo *philo)
 {
 	long	attente;
 
-	attente = (philo->p_table->time_to_eat * 2) - (philo->p_table->time_to_sleep);
 	ft_write(philo, THINK);
-	// ft_usleep(((philo->p_table->time_to_eat * 2) - (philo->p_table->time_to_sleep)), philo->p_table);
-	if (philo->p_table->nbr_philo % 2 == 0 && philo->pos % 2 == 0)
-		// ft_usleep(((philo->p_table->time_to_eat * 2) - (philo->p_table->time_to_sleep)), philo->p_table);
+	attente = (philo->p_table->time_to_eat * 2)
+		- (philo->p_table->time_to_sleep);
+	if (philo->p_table->nbr_philo % 2 == 0)
 		ft_usleep(1000, philo->p_table);
-	else if (philo->p_table->nbr_philo % 2 == 1 && philo->pos % 2 == 0)
+	else if (philo->p_table->nbr_philo % 2 == 1)
 		ft_usleep(attente * 1000, philo->p_table);
 }
