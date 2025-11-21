@@ -73,6 +73,7 @@ int		ft_check_int_av(int ac, char **av);
 
 // ft_init
 int		ft_init_av(int ac, char **av, t_table *table);
+void	ft_init_fork(t_table *table, int i, int j);
 int		ft_init_philo(t_table *table);
 int		ft_init_mutex(t_table *table);
 

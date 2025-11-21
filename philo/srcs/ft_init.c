@@ -37,13 +37,8 @@ int	ft_init_av(int ac, char **av, t_table *table)
 	return (0);
 }
 
-int	ft_init_philo(t_table *table)
+void	ft_init_fork(t_table *table, int i, int j)
 {
-	int	i;
-	int	j;	
-
-	i = 0;
-	j = 1;
 	while (i < table->nbr_philo)
 	{
 		table->philo[i].pos = j;
@@ -64,6 +59,16 @@ int	ft_init_philo(t_table *table)
 		i++;
 		j++;
 	}
+}
+
+int	ft_init_philo(t_table *table)
+{
+	int	i;
+	int	j;	
+
+	i = 0;
+	j = 1;
+	ft_init_fork(table, i, j);
 	return (0);
 }
 
