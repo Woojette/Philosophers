@@ -50,6 +50,7 @@ void	*routine_manager(void *arg)
 		i++;
 		if (i == table->nbr_philo)
 			i = 0;
+		usleep(100);
 	}
 	return (NULL);
 }
@@ -61,7 +62,7 @@ int	ft_create_thread(t_table *table)
 	i = 0;
 	while (i < table->nbr_philo)
 	{
-		if (i % 2 == 0)
+		if (i % 2 == 1)
 		{
 			pthread_create(&table->philo[i].philo_id, NULL,
 				routine, &table->philo[i]);
@@ -69,14 +70,15 @@ int	ft_create_thread(t_table *table)
 		i++;
 	}
 	i = 0;
+	usleep(100);
 	while (i < table->nbr_philo)
 	{
-		if (i % 2 == 1)
+		if (i % 2 == 0)
 		{
 			pthread_create(&table->philo[i].philo_id, NULL,
 				routine, &table->philo[i]);
 		}
-		i++;
+		i++;ㅊㅇ 
 	}
 	pthread_create(&table->manager, NULL, routine_manager, table);
 	return (0);

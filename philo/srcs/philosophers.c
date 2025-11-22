@@ -12,18 +12,25 @@
 
 #include "philosophers.h"
 
+int	ft_check_init_debut(int ac, char **av, t_table *table)
+{
+	if ((ac != 5) && (ac != 6))
+		return (write(2, "Error\n", 6), 1);
+	if ((ft_check_int_av(ac, av) == 1) || (ft_check_limit(ac, av) == 1))
+		return (write(2, "Error\n", 6), 1);
+	if (ft_init_av(ac, av, table) == -1)
+		return (write(2, "Error\n", 6), 1);
+	return (0);
+}
+
 int	main(int ac, char **av)
 {
 	int		i;
 	t_table	table;
 
 	i = 1;
-	if ((ac != 5) && (ac != 6))
-		return (write(2, "Error\n", 6), 1);
-	if ((ft_check_int_av(ac, av) == 1) || (ft_check_limit(ac, av) == 1))
-		return (write(2, "Error\n", 6), 1);
-	if (ft_init_av(ac, av, &table) == -1)
-		return (write(2, "Error\n", 6), 1);
+	if (ft_check_init_debut(ac, av, &table) == 1)
+		return (1);
 	table.time_debut = ft_init_time(&table);
 	if (table.nbr_philo == 1)
 	{
@@ -33,6 +40,8 @@ int	main(int ac, char **av)
 		printf("%lu %d died\n", ft_get_time_ms(&table), table.philo->pos);
 		return (free(table.philo), free(table.fork), 0);
 	}
+	if (table.nbr_time_eat == 0)
+		return (free(table.philo), free(table.fork), 0);
 	ft_init_mutex(&table);
 	ft_create_thread(&table);
 	ft_join_thread(&table);

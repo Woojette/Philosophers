@@ -18,7 +18,9 @@ void	ft_write(t_philo *philo, int status)
 
 	temps = ft_get_time_ms(philo->p_table);
 	pthread_mutex_lock(&philo->p_table->write);
-	if (ft_get_int(&philo->p_table->m_end, &philo->p_table->end) == 1)
+	if (ft_get_int(&philo->p_table->m_end, &philo->p_table->end) == 1
+		|| ft_get_int(&philo->p_table->m_end, &philo->p_table->all_full)
+		== philo->p_table->nbr_philo)
 	{
 		pthread_mutex_unlock(&philo->p_table->write);
 		return ;
@@ -45,19 +47,19 @@ void	ft_eat(t_philo *philo)
 	ft_write(philo, FORK1);
 	pthread_mutex_lock(&philo->fork_2e->fork);
 	ft_write(philo, FORK2);
-	ft_write(philo, EAT);
 	ft_incrementer_int(&philo->p_mange, &philo->philo_mange);
-	ft_set_long(&philo->p_mange, &philo->last_meal,
-		ft_get_time_ms(philo->p_table));
-	ft_usleep((philo->p_table->time_to_eat * 1000), philo->p_table);
-	pthread_mutex_unlock(&philo->fork_le->fork);
-	pthread_mutex_unlock(&philo->fork_2e->fork);
+	ft_write(philo, EAT);
 	if (ft_get_int(&philo->p_mange, &philo->philo_mange)
 		== philo->p_table->nbr_time_eat)
 	{
 		ft_incrementer_int(&philo->p_table->m_end,
 			&philo->p_table->all_full);
 	}
+	ft_set_long(&philo->p_mange, &philo->last_meal,
+		ft_get_time_ms(philo->p_table));
+	ft_usleep((philo->p_table->time_to_eat * 1000), philo->p_table);
+	pthread_mutex_unlock(&philo->fork_le->fork);
+	pthread_mutex_unlock(&philo->fork_2e->fork);
 }
 
 void	ft_sleep(t_philo *philo)
